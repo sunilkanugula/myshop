@@ -8,8 +8,8 @@ const Navbar = () => {
     const {setShowSearch,showSearch,getCartCount} = useContext(ShopContext);
 
   return (
-    <div className='flex items-center justify-between py-5 font-medium '>
-      <Link to="/"> <h1  className='w-36'>WOLFY</h1></Link>
+    <div className='flex items-center justify-between pt-3 pb-5 font-medium '>
+      <Link to="/"> <h1 className='font-bold text-2xl'>WOLFY</h1></Link>
         <ul className='hidden sm:flex   gap-7  text-gray-700 '>
            <NavLink to="/" className="flex flex-col items-center gap-1 ">
               <p>HOME</p>
@@ -32,14 +32,14 @@ const Navbar = () => {
         <div className='flex items-center gap-6'>
             <img onClick={()=> setShowSearch(!showSearch)} src={assets.search_icon} alt='search-icon' className='w-5'/>
             <div className='group relative'>
-              <img src={assets.profile_icon} alt="profile" className='w-5 cursor-pointer'/>
-               <div className='group-hover:block hidden absolute drop-down-menu right-0 pt-4'>
+              <Link to="/login "><img src={assets.profile_icon} alt="profile" className='w-5 cursor-pointer'/></Link>
+                  <div className='group-hover:block hidden absolute drop-down-menu right-0 pt-4'>
                   <div className='flex flex-col  pl-3 gap-2 w-36 py-5 bg-slate-100 text-gray-500 rounded'>
                     <p className='cursor-pointer hover:text-black'>My Profile</p>
-                    <p className='cursor-pointer hover:text-black'>Orders</p>
-                    <p className='cursor-pointer hover:text-black'>Logout</p>
+                   <Link to="/orders"><p className='cursor-pointer hover:text-black'>Orders</p></Link> 
+                   <Link to="/login"><p className='cursor-pointer hover:text-black'>Logout</p></Link>
                   </div>
-        v    </div>
+            </div>
            </div>
            <NavLink to="/cart" className="relative">
               <img src={assets.cart_icon} className='w-5 min-w-5 bg-white' alt="cart-icon"/>
