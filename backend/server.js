@@ -4,6 +4,7 @@ import 'dotenv/config'
 import connectDB from "./config/mongodb.js"
 import connectCloudinary from "./config/cloudinary.js"
 import userRouter from "./routes/userRoute.js"
+import productRouter from "./routes/ProductRoute.js"
  
 //App Config
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(cors()) //we can access the backend at any IP
 
 //api endpoints
+app.use('/api/product',productRouter)
 app.use('/api/user/',userRouter)
 app.get("/",(req,res)=>{
     res.send("API WORKING ")

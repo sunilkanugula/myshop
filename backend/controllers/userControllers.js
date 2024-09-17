@@ -11,8 +11,22 @@ const createToken = (id) => {
 
 //Route for Login User
 const  loginUser = async(req,res) => {
-   
-}
+   const {email,password} = req.body;
+   const user = await userModel.findOne({email})
+   if(user){
+    const isMatch = await bcrypt.compare(password,user.password)
+    if(isMatch){
+        const token = createToken(user._id);
+        res.json({success:true,token})
+    }
+    else{
+        res.json({success:false,message:"Invalid Password"})
+    }
+   }
+   else{
+     res.json({success:true,message:"User doesn't exists"})    
+   }
+ }
 
 //Route for user register
 const registerUser = async(req,res) => {
@@ -53,7 +67,17 @@ const registerUser = async(req,res) => {
 //Route for Admin Login
 
 const adminLogin = async(req,res) => {
-
+    const {email,password} = req.body;  
+    try {
+        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
+          const token = jwt.sign(email+password,process.env.JWT_SECRET);
+            res.json({success:true,token})
+            console.log(token)
+             
+        }
+      } catch (error) {
+        res.json({success:true,message:error})
+      }
 }
 
 export {loginUser,registerUser,adminLogin} 
