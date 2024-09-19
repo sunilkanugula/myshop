@@ -28,6 +28,7 @@ const addProduct = async (req, res) => {
       name,
       description,
       category,
+      image:imageUrl,
       price:Number(price),
       subcategory,
       bestseller:bestseller === "true" ? true : false,
@@ -59,9 +60,11 @@ const removeProduct = async (req, res) => {
 
 const listProducts = async (req, res) => {
   // Logic for listing products
+  console.log("hii ")
   try {
     const products  = await productModel.find({});
     res.json({success:true,products})
+    
    } catch (error) {
      console.log(error);
   }

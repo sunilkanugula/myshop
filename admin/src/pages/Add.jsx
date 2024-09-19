@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { assets } from "../assets/admin_assets/assets"
 import axios from "axios";
 import { backendUrl } from '../App';
+import {toast} from "react-toastify"
 const Add = ({token}) => {
   console.log(token,"add.jsx")
   const[image1,setImage1] = useState(false);
@@ -34,9 +35,21 @@ const Add = ({token}) => {
      image4 && formData.append("image4",image4);
      
      const response = await axios.post(backendUrl+"/api/product/add",formData,{headers:{token}});
-     console.log(response.data)
+     if(response.data.success){
+      toast.success(response.data.message);
+      setName("");
+      setDescription("");
+      setImage1("");
+      setImage2("");
+      setImage3("");
+      setImage4("");
+      setSizes([]);
+      setBestseller(false);
+      setPrice("")
+     }
       } catch (error) {
         console.log(error)
+        toast.error(response.data.message)
       }
       
   }
@@ -95,7 +108,7 @@ const Add = ({token}) => {
     
       <div>
         <p className='mb-2'>Product Price</p>
-        <input onChange={(e)=> setPrice(e.target.value)}  value={price} className='px-3 py-2 w-full sm:w-[120px]' type='Number'placeholder='25'/>
+        <input onChange={(e)=> setPrice(e.target.value)}  value={price} className='px-3 py-2 w-full sm:w-[120px]' type='Number'placeholder='25' required/>
       </div>
       </div>
       <div >
