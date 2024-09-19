@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { json } from "express";
 import productModel from "../models/productModel.js"
+
 const addProduct = async (req, res) => {
   console.log(req.body.subcategory,"hii")
   try {
