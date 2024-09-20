@@ -19,7 +19,7 @@ const Add = ({token}) => {
   
   const onSubmitHandler = async (e) => {
       e.preventDefault();
-      console.log(token)
+      console.log(category,subcategory)
       try {
         const formData = new FormData()
       formData.append("name",name);
@@ -91,7 +91,7 @@ const Add = ({token}) => {
       <div className='flex flex-col sm:flex-row gap-2 w-full sm:gap-8 '>
         <div>
         <p className='mb-2'>Product category</p>
-        <select className='w-full px-3 py-2' onSelect={(e)=> setCategory(e.target.value)} value={category}>
+        <select className='w-full px-3 py-2' onChange={(e)=> setCategory(e.target.value)} value={category}>
           <option value="Men">Men</option>
           <option value="Women">Women</option>
           <option value="Kids">Kids</option>
@@ -99,7 +99,7 @@ const Add = ({token}) => {
       </div>
       <div>
         <p className='mb-2'>Sub category</p>
-        <select className='w-full px-3 py-2' onSelect={(e) => setSubcategory(e.target.value)} value={subcategory}>
+        <select className='w-full px-3 py-2' onChange={(e) => setSubcategory(e.target.value)} value={subcategory}>
           <option value="Topwear">Topwear</option>
           <option value="Bottomwear">Bottomwear</option>
           <option value="Winterwear">WinterWear</option>

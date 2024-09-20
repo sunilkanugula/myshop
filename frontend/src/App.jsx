@@ -11,9 +11,10 @@ import Order from './pages/Order'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+console.log(backendUrl)
 const App = () => {
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>

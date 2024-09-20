@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
 import  { createContext, useEffect, useState } from "react";
-import {products} from "../assets/frontend_assets/assets"; 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import { backendUrl } from "../App";
+import axios from "axios";
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const currency = "₹";
   const delivery_fee = 10;
+  
   const [search,setSearch] = useState("");
   const [showSearch,setShowSearch] = useState(false);
+  const [products,setProducts] = useState([])
   const [cartItems,setCartItems] = useState({});
   const navigate = useNavigate()
   const addToCart = async(itemId,size) => {
@@ -69,10 +71,28 @@ const getCartAmount = async() => {
   return totalCartAmount;
 };
 
-
-  useEffect(()=> {
-    console.log(cartItems)
-  },[cartItems])
+const getAllProducts = async() => {
+  try {
+    const response = await axios.get(backendUrl+'/api/product/list');
+    const data =await response.data
+    if(data.success){
+      setProducts(data.products);
+      console.log(data.products)
+    }
+    else {
+      toast.error(data.message)
+    }
+   
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message)
+  }
+ 
+}
+  
+useEffect(()=> {
+    getAllProducts();
+  },[])
 
   const getCartCount = () => {
     let totalCount = 0;
@@ -100,7 +120,7 @@ const getCartAmount = async() => {
     currency,
     delivery_fee,
     search,setSearch,showSearch,setShowSearch,
-    cartItems,addToCart,getCartCount,updateCartCount,getCartAmount,navigate
+    cartItems,addToCart,getCartCount,updateCartCount,getCartAmount,navigate,backendUrl
   };
 
   return (

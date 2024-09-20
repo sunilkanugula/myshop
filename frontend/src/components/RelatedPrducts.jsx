@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import ProductItem from './ProductItem';
 import Tittle from './Tittle';
 
-const RelatedProducts = ({ category, subCategory, id }) => {
+const RelatedProducts = ({ category, subcategory, id }) => {
   const { products } = useContext(ShopContext);
   const [relevant, setRelated] = useState([]);
-
+  console.log(subcategory)
   useEffect(() => {
     if (products.length > 0) {
       const filteredProducts = products.filter(
         (item) =>
           item.category === category &&
-          item.subCategory === subCategory &&
+          item.subcategory === subcategory &&
           item._id !== id
       );
       setRelated(filteredProducts.slice(0, 5));
     }
-  }, [products, category, subCategory, id]); // Include category, subCategory, and id in the dependency array
+  }, [products, category, subcategory, id]); // Include category, subCategory, and id in the dependency array
 
   return (
     <div className="my-24">

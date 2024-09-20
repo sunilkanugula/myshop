@@ -60,11 +60,10 @@ const removeProduct = async (req, res) => {
 
 const listProducts = async (req, res) => {
   // Logic for listing products
-  console.log("hii ")
   try {
     const products  = await productModel.find({});
     res.json({success:true,products})
-    
+    console.log("products to fronntend")
    } catch (error) {
      console.log(error);
   }
