@@ -9,7 +9,7 @@ const CartTotal = () => {
   useEffect(() => {
     const fetchCartAmount = async () => {
       try {
-        const amount = await getCartAmount(); // Await the async function
+        const amount =  getCartAmount(); // Await the async function
         setCartAmount(amount); // Set the fetched amount in state
       } catch (error) {
         console.error("Failed to fetch cart amount:", error);

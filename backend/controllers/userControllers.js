@@ -24,7 +24,7 @@ const  loginUser = async(req,res) => {
     }
    }
    else{
-     res.json({success:true,message:"User doesn't exists"})    
+     res.json({success:false,message:"User doesn't exists"})    
    }
  }
 

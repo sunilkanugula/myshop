@@ -5,6 +5,8 @@ import connectDB from "./config/mongodb.js"
 import connectCloudinary from "./config/cloudinary.js"
 import userRouter from "./routes/userRoute.js"
 import productRouter from "./routes/ProductRoute.js"
+import cartRouter from "./routes/cartRoute.js"
+import orderRouter from "./routes/orderRoute.js"
  
 //App Config
 const app = express()
@@ -18,6 +20,8 @@ app.use(cors()) //we can access the backend at any IP
 //api endpoints
 app.use('/api/product',productRouter)
 app.use('/api/user/',userRouter)
+app.use('/api/cart',cartRouter)
+app.use('/api/order/',orderRouter)
 app.get("/",(req,res)=>{
     res.send("API WORKING ")
 })

@@ -1,41 +1,60 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { BACKEND_URL } from '../constants';
-import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../context/ShopContext';
+import axios from 'axios';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [currentState, setCurrentState] = useState('Sign Up');
+  
+  const [currentState, setCurrentState] = useState('Login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState(''); // Name state for Sign Up
+  const [name, setName] = useState(''); 
+  const {token,setToken,navigate,backendUrl} = useContext(ShopContext)
+  
+  useEffect(()=>{
+    console.log(token,"login")
+    if(token) {
+      navigate("/")
+    }
+  },[token])
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Replace with actual sign-up/login API request handling
+      
       if (currentState === 'Login') {
-        // Perform login logic here
-        toast.success('Login Successful');
-        navigate('/'); // Navigate after successful login
+           const response = await axios.post(backendUrl+'/api/user/login',{email,password});
+           console.log(response.data.success,"login")
+           if(response.data.success){
+            setToken(response.data.token);
+            localStorage.setItem('token',response.data.token);
+            toast.success("Login Successfully")
+            console.log("login success")
+           }
+           else{
+               toast.error(response.data.message)
+           }
       } else {
-        // Perform sign-up logic here
-        toast.success('Sign Up Successful');
-        navigate('/'); // Navigate after successful sign-up
+        const response =  await axios.post(backendUrl+'/api/user/register',{name,email,password});
+        if(response.data.success) {
+          setToken(response.data.token);
+          localStorage.setItem('token',response.data.token)
+          toast.success("Register Successfully")
+          setCurrentState("Login")
+          setName("");
+          setPassword("");
+          setEmail("");
+        }
+        else{
+          toast.error(response.data.message)
+        }
       }
     } catch (err) {
       toast.error(err?.data?.message || err.message || 'An error occurred');
     }
   };
 
-  const handleGoogleAuth = () => {
-    try {
-      window.location.href = `${BACKEND_URL}/auth/google`; // Redirects to Google OAuth
-    } catch (err) {
-      toast.error(err?.data?.message || err.message || 'Failed to authenticate with Google');
-    }
-  };
-
+ 
   return (
     <form onSubmit={onSubmitHandler} className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-400">
       <div className="inline-flex items-center gap-2 mb-2 mt-10">
@@ -83,9 +102,7 @@ const Login = () => {
       <button type="submit" className="bg-black text-white font-light px-8 py-2 mt-4">
         {currentState === 'Login' ? 'Login' : 'Sign Up'}
       </button>
-      <button type="button" onClick={handleGoogleAuth} className="bg-black text-white font-light px-8 py-2 mt-4">
-        Sign in with Google
-      </button>
+      
     </form>
   );
 };
