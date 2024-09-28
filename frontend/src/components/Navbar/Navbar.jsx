@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div className='flex items-center justify-between pt-3 pb-5 font-medium '>
-      <Link to="/"> <h1 className='font-bold text-2xl'>WOLFY</h1></Link>
+      <Link to="/"> <h1 className='font-bold text-2xl'>MYSHOP</h1></Link>
         <ul className='hidden sm:flex   gap-7  text-gray-700 '>
            <NavLink to="/" className="flex flex-col items-center gap-1 ">
               <p>HOME</p>
